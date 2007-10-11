@@ -16,7 +16,5 @@ namespace DRToolbox.UI
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new MainForm());
 		}
-
-        // test
 	}
 }
