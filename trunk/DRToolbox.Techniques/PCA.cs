@@ -4,7 +4,7 @@ using System.Text;
 using MathNet.Numerics;
 //using MathNet.Numerics.LinearAlgebra;
 
-namespace Techniques_PCA
+namespace Techniques
 {
     class PCA
     {
@@ -16,10 +16,10 @@ namespace Techniques_PCA
         /// <summary>Default constructor</summary>
         /// <param name="A">Matrix being operated upon.</param>
         /// <param name="n">no_dims, also number of columns.</param>
-        public PCA(MathNet.Numerics.LinearAlgebra.Matrix A, int n)
+        public PCA(MathNet.Numerics.LinearAlgebra.Matrix A)
         {
             aMatrix = A;
-            columns = n; // no_dims = number of columns
+            //columns = n; // no_dims = number of columns
         }
 
         // Default destructor goes here
