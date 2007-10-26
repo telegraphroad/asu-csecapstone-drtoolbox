@@ -74,136 +74,89 @@ public class MatrixFunctions
         return aMatrix; // Returns a matrix with column 1 of lambda values, column 2 of indices
     }
 
+    /* Code by KRT: Last Updated Fri 10/26/07 */
+
+    /*
+     * Pseudocode for Cov function
+     * 
+     * X:input --> n x p matrix
+     * A = X - [(ones(n,1) * mean(X)] -> demeaning step
+     * Y = [A * A'] / (n-1)
+     * where A' -> transpose(A)
+     * Y: output matrix
+     * 
+     */
 
     /// <summary>
-    /// Given a matrix, computes the covariance and returns the covariance matrix.
+    /// Given a matrix (of type MathNet.Numerics.LinearAlgebra.Matrix), computes the covariance and returns the covariance matrix.
     /// </summary>
-    /// <param name="origMatrix">The matrix whose covariance is to be computed.</param>
-    /// <returns>The covariance matrix of the matrix passed as a parameter.</returns>
-    public double[,] cov(double[,] origMatrix)
+    /// <param name="origMatrix">The original matrix, of type MathNet.Numerics.LinearAlgebra.Matrix, whose covariance is to be computed.</param>
+    /// <returns>A Matrix (of type MathNet.Numerics.LinearAlgebra.Matrix) which is the covariance matrix of the parameter.</returns>
+    public Matrix cov(Matrix origMatrix)
     {
-        int numRows = 0, numCols = 0;
-        double[,] demeanedMatrix;   // This is A of hte pseudocode
-        double[,] demeaner;         // This is [ones(n,1) * mean(X)]
-        double[,] retMatrix;        // Matrix to return: Y
+        int numRows = 0;
+        int numCols = 0;
 
-        numRows = origMatrix.GetLength(0);
-        numCols = origMatrix.GetLength(1);
+        Matrix demeanedMatrix;      // This is A of the pseudocode
+        Matrix onesMatrix;          // This is ones(n,n)
+        Matrix demeaner;            // This is [ones(n,1) * mean(X)]
+        Matrix transposeMatrix;     // This is A'
+        Matrix retMatrix;           // The matrix to be returned: Y
 
-        demeaner = matrixMult(ones(numRows, 1), computeMean(origMatrix));
-        demeanedMatrix = new double[numRows, numCols];
+        numRows = origMatrix.RowCount;
+        numCols = origMatrix.ColumnCount;
 
-        // ************************************
-        // Can this be done?
+        onesMatrix = Matrix.Ones(numRows);
+        onesMatrix = onesMatrix.GetMatrix(0, numRows, 0, 1);
+
+        demeaner = onesMatrix * computeMean(origMatrix);
 
         demeanedMatrix = origMatrix - demeaner;
 
-        // ************************************
+        transposeMatrix = Matrix.Transpose(demeanedMatrix);
 
-        retMatrix = matrixMult(demeanedMatrix, transpose(demeanedMatrix));
-
-        retMatrix = (retMatrix / (numRows - 1));
+        retMatrix = demeanedMatrix * transposeMatrix;
+        retMatrix = retMatrix * ((double)(1 / (numRows - 1)));
 
         return retMatrix;
-    }
-
-    /// <summary>
-    /// Given 2 dimensions m and n, returns an mxn all of whose elements are 1s.
-    /// </summary>
-    /// <param name="rows">m = Number of Rows of Output Matrix</param>
-    /// <param name="cols">n = Number of Columns of Output Matrix</param>
-    /// <returns>A matrix M of dimensions m x n all of whose elements are 1s.</returns>
-
-    public double[,] ones(int rows, int cols)
-    {
-        double[,] retArray = new double[rows, cols];
-
-        for (int i = 0; i < rows; i++)
-            for (int j = 0; j < cols; j++)
-                retArray[i, j] = 1.0;
-
-        return retArray;
     }
 
     /// <summary>
     /// Provides the dimension-wise mean of a given matrix.
     /// </summary>
-    /// <param name="origMatrix">The matrix whose dimension-wise mean is to be computed.</param>
-    /// <returns>A 1xm matrix that contains the columnwise means of the parameter matrix.</returns>
-
-    public double[,] computeMean(double[,] origMatrix)
+    /// <param name="origMatrix">The matrix (of type MathNet.Numerics.LinearAlgebra.Matrix) whose dimension-wise mean is to be computed.</param>
+    /// <returns>A 1 x m Matrix that contains the columnwise means of the parameter matrix.</returns>
+    public Matrix computeMean(Matrix origMatrix)
     {
-        double[,] means;
-        int numRows = 0, numCols = 0;
+        int numRows = 0;
+        int numCols = 0;
+
+        Matrix means;
+
         double sum = 0.0;
         double mean = 0.0;
 
-        numRows = origMatrix.GetLength(0);
-        numCols = origMatrix.GetLength(1);
+        numRows = origMatrix.RowCount;
+        numCols = origMatrix.ColumnCount;
+
+        means = new Matrix(1, numRows);
 
         for (int i = 0; i < numCols; i++)
         {
+            sum = 0.0;
+
             for (int j = 0; j < numRows; j++)
             {
                 sum += origMatrix[j, i];
             }
-            mean = sum / numRows;
-            means[0, i] = mean;
 
+            mean = sum / (double)numRows;
+            means[0, i] = mean;
         }
 
         return means;
-    }
-
-    public double[,] matrixMult(double[,] matrixOne, double[,] matrixTwo)
-    {
-        double[,] resultMatrix;
-        double iterSum = 0.0;
-        int matrixOneRows = 0, matrixOneCols = 0, matrixTwoRows = 0, matrixTwoCols = 0;
-
-        matrixOneRows = matrixOne.GetLength(0);
-        matrixTwoRows = matrixTwo.GetLength(0);
-        matrixOneCols = matrixOne.GetLength(1);
-        matrixTwoCols = matrixTwo.GetLength(1);
-
-        if (matrixOneCols != matrixTwoRows)
-            return null;
-
-        resultMatrix = new double[matrixOneRows, matrixTwoCols];
-
-        for (int i = 0; i < matrixOneRows; i++)
-        {
-            for (int j = 0; j < matrixTwoCols; j++)
-            {
-                iterSum = 0.0;
-                for (int k = 0; k < matrixOneCols; k++)
-                {
-                    iterSum += matrixOne[i, k] * matrixTwo[k, j];
-                }
-                resultMatrix[i, j] = iterSum;
-            }
-        }
-
-        return resultMatrix;
-    }
-
-    public double[,] transpose(double[,] origMatrix)
-    {
-        int numRows = origMatrix.GetLength(0);
-        int numCols = origMatrix.GetLength(1);
-
-        double[,] retMatrix = new double[numCols, numRows];
-
-        for (int i = 0; i < numRows; i++)
-            for (int j = 0; j < numCols; j++)
-                retMatrix[numCols, numRows] = origMatrix[numRows, numCols];
-
-        return retMatrix;
-    }
-
-    /* END CODE BY KRT */
-
-
+    } /* END CODE BY KRT */
+    
     /// <summary>
     /// Generates a matrix dataset depending on the type of distribution indicated.  Currently only 3-D(3 columns)
     /// of "swiss" type data may be generated.

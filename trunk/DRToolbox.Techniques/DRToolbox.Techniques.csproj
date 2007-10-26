@@ -28,11 +28,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Iridium, Version=2007.3.8.35795, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\drtoolbox\MathNet.Iridium-2007.3.8\Release\MathNet.Iridium.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MatrixFunctions.cs" />
     <Compile Include="PCA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
