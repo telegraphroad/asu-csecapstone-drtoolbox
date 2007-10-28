@@ -30,7 +30,7 @@
   <ItemGroup>
     <Reference Include="MathNet.Iridium, Version=2007.3.8.35795, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\drtoolbox\MathNet.Iridium-2007.3.8\Release\MathNet.Iridium.dll</HintPath>
+      <HintPath>..\..\MathNet\build\Debug\MathNet.Iridium.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
