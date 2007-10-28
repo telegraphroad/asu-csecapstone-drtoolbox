@@ -73,6 +73,33 @@ public class MatrixFunctions
 
         return aMatrix; // Returns a matrix with column 1 of lambda values, column 2 of indices
     }
+// code by abhishikth chandra
+// this is the code for function repmat
+// it increases the dinention of matrix mXn times
+    public Matrix Repmat(Matrix A,int m,int n)
+    {
+    	int x = A.RowCount;
+    	int y = A.ColumnCount;
+    	
+    	int C = m * x;
+    	int D = n * y;
+    	int E;
+    	int F;
+    	
+    	Matrix B = new Matrix(C,D);
+    	
+    	for (int i = 0; i < C ; i++)
+    	{
+    		for ( int j =0; j< D; j++)
+    		{
+    			E = i % x;
+    			F = j % y;
+    			B[i,j] = A[E,F];
+    		}
+    	}
+    	
+    	return B;	
+    }
 
     /* Code by KRT: Last Updated Fri 10/26/07 */
 
