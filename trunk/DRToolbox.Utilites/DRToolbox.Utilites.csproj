@@ -35,6 +35,15 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Outside DLL Files\MathNet.Iridium v2007.3.8.28682\de\MathNet.Iridium.resources.dll" />
+    <Content Include="Outside DLL Files\MathNet.Iridium v2007.3.8.28682\es\MathNet.Iridium.resources.dll" />
+    <Content Include="Outside DLL Files\MathNet.Iridium v2007.3.8.28682\fr\MathNet.Iridium.resources.dll" />
+    <Content Include="Outside DLL Files\MathNet.Iridium v2007.3.8.28682\MathNet.Iridium.dll" />
+    <Content Include="Outside DLL Files\MathNet.Iridium v2007.3.8.28682\MathNet.Iridium.XML" />
+    <Content Include="Outside DLL Files\ZedGraph v5.1.0.621\ZedGraph.dll" />
+    <Content Include="Outside DLL Files\ZedGraph v5.1.0.621\ZedGraph.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

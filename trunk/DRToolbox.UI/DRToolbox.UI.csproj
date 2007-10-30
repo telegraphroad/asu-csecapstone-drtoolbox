@@ -34,23 +34,44 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.0.621, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DRToolbox.Utilites\Outside DLL Files\ZedGraph v5.1.0.621\ZedGraph.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
+    <Compile Include="FileImport\CSV\CSVImportDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="FileImport\CSV\CSVImportDialog.designer.cs">
+      <DependentUpon>CSVImportDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileImport\CSV\CSVImporter.cs" />
+    <Compile Include="FileImport\ImportedFile.cs" />
+    <Compile Include="FileImport\PointLabelColors.cs" />
+    <Compile Include="Graphs\XYScatterPlot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\XYScatterPlot.designer.cs">
+      <DependentUpon>XYScatterPlot.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="FileImport\CSV\CSVImportDialog.resx">
+      <DependentUpon>CSVImportDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
-      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\XYScatterPlot.resx">
+      <DependentUpon>XYScatterPlot.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -66,6 +87,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DRToolbox.Techniques\DRToolbox.Techniques.csproj">
@@ -76,6 +103,9 @@
       <Project>{CEA61B17-28FB-4161-96E9-1430FC8E5325}</Project>
       <Name>DRToolbox.Utilites</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Logo.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
