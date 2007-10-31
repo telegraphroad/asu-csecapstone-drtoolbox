@@ -31,12 +31,10 @@ namespace DRToolbox.UI
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.mItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemImportFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuImportFileCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemTechniques = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemPCA = new System.Windows.Forms.ToolStripMenuItem();
-            this.mItemMDS = new System.Windows.Forms.ToolStripMenuItem();
-            this.mItemLLE = new System.Windows.Forms.ToolStripMenuItem();
-            this.mItemIsomap = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -47,7 +45,6 @@ namespace DRToolbox.UI
             this.mItemTutorial = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
-            this.menuImportFileCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,6 +78,13 @@ namespace DRToolbox.UI
             this.mItemImportFile.Size = new System.Drawing.Size(152, 22);
             this.mItemImportFile.Text = "Import &File...";
             // 
+            // menuImportFileCSV
+            // 
+            this.menuImportFileCSV.Name = "menuImportFileCSV";
+            this.menuImportFileCSV.Size = new System.Drawing.Size(185, 22);
+            this.menuImportFileCSV.Text = "Comma Delimited (CSV)";
+            this.menuImportFileCSV.Click += new System.EventHandler(this.menuImportFileCSV_Click);
+            // 
             // mItemExit
             // 
             this.mItemExit.Name = "mItemExit";
@@ -91,10 +95,7 @@ namespace DRToolbox.UI
             // mItemTechniques
             // 
             this.mItemTechniques.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mItemPCA,
-            this.mItemMDS,
-            this.mItemLLE,
-            this.mItemIsomap});
+            this.mItemPCA});
             this.mItemTechniques.Name = "mItemTechniques";
             this.mItemTechniques.Size = new System.Drawing.Size(98, 20);
             this.mItemTechniques.Text = "D.R. &Techniques";
@@ -102,27 +103,9 @@ namespace DRToolbox.UI
             // mItemPCA
             // 
             this.mItemPCA.Name = "mItemPCA";
-            this.mItemPCA.Size = new System.Drawing.Size(255, 22);
+            this.mItemPCA.Size = new System.Drawing.Size(244, 22);
             this.mItemPCA.Text = "Principle Component Analysis (PCA)";
             this.mItemPCA.Click += new System.EventHandler(this.mItemPCA_Click);
-            // 
-            // mItemMDS
-            // 
-            this.mItemMDS.Name = "mItemMDS";
-            this.mItemMDS.Size = new System.Drawing.Size(255, 22);
-            this.mItemMDS.Text = "Multidimensional Scalling (MDS)";
-            // 
-            // mItemLLE
-            // 
-            this.mItemLLE.Name = "mItemLLE";
-            this.mItemLLE.Size = new System.Drawing.Size(255, 22);
-            this.mItemLLE.Text = "Local Linear Embedding (LLE)";
-            // 
-            // mItemIsomap
-            // 
-            this.mItemIsomap.Name = "mItemIsomap";
-            this.mItemIsomap.Size = new System.Drawing.Size(255, 22);
-            this.mItemIsomap.Text = "Isomap";
             // 
             // mItemWindow
             // 
@@ -177,13 +160,13 @@ namespace DRToolbox.UI
             // mItemTutorial
             // 
             this.mItemTutorial.Name = "mItemTutorial";
-            this.mItemTutorial.Size = new System.Drawing.Size(121, 22);
+            this.mItemTutorial.Size = new System.Drawing.Size(152, 22);
             this.mItemTutorial.Text = "T&utorial";
             // 
             // mItemAbout
             // 
             this.mItemAbout.Name = "mItemAbout";
-            this.mItemAbout.Size = new System.Drawing.Size(121, 22);
+            this.mItemAbout.Size = new System.Drawing.Size(152, 22);
             this.mItemAbout.Text = "&About";
             this.mItemAbout.Click += new System.EventHandler(this.mItemAbout_Click);
             // 
@@ -194,13 +177,6 @@ namespace DRToolbox.UI
             this.statusBar.Size = new System.Drawing.Size(840, 22);
             this.statusBar.TabIndex = 1;
             this.statusBar.Text = "Status Bar";
-            // 
-            // menuImportFileCSV
-            // 
-            this.menuImportFileCSV.Name = "menuImportFileCSV";
-            this.menuImportFileCSV.Size = new System.Drawing.Size(196, 22);
-            this.menuImportFileCSV.Text = "Comma Delimited (CSV)";
-            this.menuImportFileCSV.Click += new System.EventHandler(this.menuImportFileCSV_Click);
             // 
             // MainForm
             // 
@@ -235,9 +211,6 @@ namespace DRToolbox.UI
         private System.Windows.Forms.ToolStripMenuItem mItemImportFile;
         private System.Windows.Forms.ToolStripMenuItem mItemWindow;
         private System.Windows.Forms.ToolStripMenuItem mItemPCA;
-        private System.Windows.Forms.ToolStripMenuItem mItemMDS;
-        private System.Windows.Forms.ToolStripMenuItem mItemLLE;
-        private System.Windows.Forms.ToolStripMenuItem mItemIsomap;
         private System.Windows.Forms.ToolStripMenuItem minimizeAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cascadeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tileToolStripMenuItem;
