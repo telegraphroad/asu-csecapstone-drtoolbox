@@ -31,6 +31,7 @@ namespace DRToolbox.UI
         {
             try
             {
+                //Close the application
                 this.Close();
             }
             catch (Exception ex)
@@ -38,6 +39,10 @@ namespace DRToolbox.UI
                 MessageBox.Show(ex.Message, "Exit Application", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        /// <summary>
+        /// Click File -> Import File... -> Comma Delimited File (CSV)
+        /// </summary>
         private void menuImportFileCSV_Click(object sender, EventArgs e)
         {
             // Local Variables
@@ -63,6 +68,7 @@ namespace DRToolbox.UI
         {
             try
             {
+                //TEST - Change this in phase 3
                 string aboutMessage = "This is a prototype.";
                 MessageBox.Show(aboutMessage, "About DR Toolbox", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
