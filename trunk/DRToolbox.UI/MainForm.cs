@@ -91,28 +91,6 @@ namespace DRToolbox.UI
         /// </summary>
         private void mItemPCA_Click(object sender, EventArgs e)
         {
-			////TEST
-			////-------------------------------
-			//XYScatterPlot xyPlot = new XYScatterPlot();
-			//xyPlot.GraphTitle = "Principle Component Analysis (PCA)";
-			//xyPlot.XAxisTitle = "X-Axis TEST";
-			//xyPlot.YAxisTitle = "Y-Axis TEST";
-
-			//ZedGraph.PointPairList list = new ZedGraph.PointPairList();
-			//Random rand = new Random();
-			//for (int i = 0; i < 100; i++)
-			//{
-			//    double x = rand.NextDouble() * 20.0 + 1;
-			//    double y = Math.Log(10.0 * (x - 1.0) + 1.0) * (rand.NextDouble() * 0.2 + 0.9);
-			//    list.Add(x, y);
-			//}
-			//xyPlot.GraphDataList = list;
-
-			//xyPlot.MdiParent = this;
-			//xyPlot.DrawXYScatterPlot();
-			//xyPlot.Show();           
-			////-------------------------------
-
 			// Local Variables
 			Matrix pcaResults = null;
 
@@ -122,7 +100,16 @@ namespace DRToolbox.UI
 				// Perform the PCA technique
 				pcaResults = PCA.getPCA(csvImportDialog.ImportFile.ImportedData, 2);
 
-				MessageBox.Show("Display Graph");
+                //Display the data in a XY scatter plot
+                XYScatterPlot xyPlot = new XYScatterPlot();
+                ZedGraph.PointPairList list = Convert2DMatrixToPointPairList(pcaResults);
+                xyPlot.GraphTitle = "Principle Component Analysis (PCA)";
+                xyPlot.XAxisTitle = "PCA X-Axis";
+                xyPlot.YAxisTitle = "PCA Y-Axis";
+                xyPlot.GraphDataList = list;
+                xyPlot.MdiParent = this;
+                xyPlot.DrawXYScatterPlot();
+                xyPlot.Show();
 			}
 			else
 			{	// No
@@ -132,7 +119,34 @@ namespace DRToolbox.UI
         }
         #endregion
 
+        #region Class Methods
+        /// <summary>
+        /// Convert a 2D Matrix to a PointPairList
+        /// </summary>
+        private ZedGraph.PointPairList Convert2DMatrixToPointPairList(Matrix techniqueResults)
+        {
+            //local vars
+            ZedGraph.PointPairList resultsList = new ZedGraph.PointPairList();
+            ZedGraph.PointPair point =  new ZedGraph.PointPair();
 
+            try
+            {
+                for (int i = 0; i < techniqueResults.RowCount; i++)
+                {
+                    //add each row in the matrix as a point pair
+                    point.X = (double)techniqueResults[i, 0];
+                    point.Y = (double)techniqueResults[i, 1];
+                    resultsList.Add(point);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Convert Matrix to PointPairList", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
+            //return the pointpairlist
+            return resultsList;
+        }
+        #endregion
     }
 }
