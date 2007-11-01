@@ -6,7 +6,7 @@ using MathNet.Numerics.LinearAlgebra;
 
 // updated 10/30/07
 
-namespace Techniques
+namespace DRToolbox.Techniques
 {
     /// <summary>
     /// Contains often-used matrix functions not provided by the MathNet APIs.  Functions included are eigenSort, cov

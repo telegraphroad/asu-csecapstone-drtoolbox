@@ -6,9 +6,9 @@ using MathNet.Numerics.LinearAlgebra;
 
 // updated 10/30/07
 
-namespace Techniques
+namespace DRToolbox.Techniques
 {
-    class PCA
+    public class PCA
     {
         // Local variables
         private Matrix aMatrix;
@@ -37,7 +37,7 @@ namespace Techniques
         /// <param name="A">Data matrix being operated upon</param>
         /// <param name="num_dims">Number of desired dimensions.  This is the number of columns in the returned matrix.  This is also the number of eigenvectors the data is being mapped to.</param>
         /// <returns></returns>
-        public Matrix getPCA(Matrix A, int num_dims)
+        public static Matrix getPCA(Matrix A, int num_dims)
         {
             
             // Local variables
