@@ -1,26 +1,28 @@
 using System;
 using System.Drawing;
 
+using MathNet.Numerics.LinearAlgebra;
+
 namespace DRToolbox.UI.FileImport
 {
 	public class ImportedFile
 	{
 		#region Class Objects
-		private double[][] matrix = null;
+		private Matrix importedData = null;
 		private Color[] labels = null;
 		private string fileName = "";
 		#endregion
 
 		#region Class Properties
-		public double[][] Matrix
+		public Matrix ImportedData
 		{
 			get
 			{
-				return matrix;
+				return importedData;
 			}
 			set
 			{
-				matrix = value;
+				importedData = value;
 			}
 		}
 		public Color[] Labels
@@ -51,7 +53,13 @@ namespace DRToolbox.UI.FileImport
 		public ImportedFile(double[][] matrixArray, Color[] labelArray, string fileToImport)
 		{
 			// Initialize object
-			matrix = matrixArray;
+            if (matrixArray != null && matrixArray.Length > 0 && matrixArray[0] != null)
+            {
+                importedData = new Matrix(matrixArray.Length, matrixArray[0].Length);
+                for (int i = 0; i < matrixArray.Length; i++)
+                    for (int j = 0; j < matrixArray[0].Length; j++)
+                        importedData[i, j] = matrixArray[i][j];
+            }
 			labels = labelArray;
 			fileName = fileToImport;
 		}
