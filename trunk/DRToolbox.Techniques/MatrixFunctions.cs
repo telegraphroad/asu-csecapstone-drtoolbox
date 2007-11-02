@@ -46,12 +46,12 @@ namespace DRToolbox.Techniques
             {
                 for (int k = 0; k < rows; k++)
                 {
-                    if (lambda[j, 1] < lambda[k, 1]) // swap condition
+                    if (lambda[j, 0] > lambda[k, 0]) // swap condition -- sorts high to low
                     {
                         // Swap lambdas
-                        tempDouble = lambda[j, 1]; // lambda[row, column]
-                        lambda[j, 1] = lambda[k, 1];
-                        lambda[k, 1] = tempDouble;
+                        tempDouble = lambda[j, 0]; // lambda[row, column]
+                        lambda[j, 0] = lambda[k, 0];
+                        lambda[k, 0] = tempDouble;
                         // Swaps indices
                         tempDouble = indices[j];
                         indices[j] = indices[k];
@@ -65,7 +65,7 @@ namespace DRToolbox.Techniques
             a2DArray = new double[rows, 2]; // rows, columns
             for (int j = 0; j < rows; j++)
             {
-                a2DArray[j, 0] = lambda[j, 1];
+                a2DArray[j, 0] = lambda[j, 0];
                 a2DArray[j, 1] = indices[j];
 
             } // end outer for loop
@@ -130,7 +130,7 @@ namespace DRToolbox.Techniques
             numCols = origMatrix.ColumnCount;
 
             onesMatrix = Matrix.Ones(numRows);
-            onesMatrix = onesMatrix.GetMatrix(0, numRows, 0, 1);
+            onesMatrix = onesMatrix.GetMatrix(0, (numRows-1), 0, 0);
 
             demeaner = onesMatrix * computeMean(origMatrix);
 
@@ -139,7 +139,7 @@ namespace DRToolbox.Techniques
             transposeMatrix = Matrix.Transpose(demeanedMatrix);
 
             retMatrix = demeanedMatrix * transposeMatrix;
-            retMatrix = retMatrix * ((double)(1 / (numRows - 1)));
+            retMatrix = retMatrix * (1.0 / (double)(numRows - 1));
 
             return retMatrix;
         }
@@ -162,7 +162,7 @@ namespace DRToolbox.Techniques
             numRows = origMatrix.RowCount;
             numCols = origMatrix.ColumnCount;
 
-            means = new Matrix(1, numRows);
+            means = new Matrix(1, numCols);
 
             for (int i = 0; i < numCols; i++)
             {
@@ -288,5 +288,5 @@ namespace DRToolbox.Techniques
             return X;
         }
 
-    } // End Class
-}// end namespace Techniques
+} // End Class
+}// end namespace Techniques>>>>>>> .r19
