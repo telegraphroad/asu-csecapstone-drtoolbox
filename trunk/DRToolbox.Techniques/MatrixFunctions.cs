@@ -22,7 +22,7 @@ namespace DRToolbox.Techniques
         /// </summary>
         /// <param name="lambda">A Matrix of lambda values.  The Matrix must be a column vector(1 column, no bound on rows)</param>
         /// <returns>A sorted(in descending order) Matrix of lambdas in the first column, in the second column are the original indices</returns>
-        public Matrix eigenSort(Matrix lambda)
+        public Matrix eigenSort(Matrix lambda, string s)
         {
             Matrix aMatrix;
             double[,] a2DArray;
@@ -34,47 +34,53 @@ namespace DRToolbox.Techniques
             //if(rows > columns) {size = columns;}
             //else size = rows;
 
-            // Convert from Matrix representation to a column vector
-            // Populate indices because the lambdas are already ordered 1, 2, 3, 4 ...
-            for (int i = 0; i < rows; i++)
+            if (s == "descending")
             {
-                indices[i] = (Double)i;
-            }
-
-            // an n^2 sorting algorithm
-            for (int j = 0; j < rows; j++)
-            {
-                for (int k = 0; k < rows; k++)
+                // Convert from Matrix representation to a column vector
+                // Populate indices because the lambdas are already ordered 1, 2, 3, 4 ...
+                for (int i = 0; i < rows; i++)
                 {
-                    if (lambda[j, 0] > lambda[k, 0]) // swap condition -- sorts high to low
+                    indices[i] = (Double)i;
+                }
+
+                // an n^2 sorting algorithm
+                for (int j = 0; j < rows; j++)
+                {
+                    for (int k = 0; k < rows; k++)
                     {
-                        // Swap lambdas
-                        tempDouble = lambda[j, 0]; // lambda[row, column]
-                        lambda[j, 0] = lambda[k, 0];
-                        lambda[k, 0] = tempDouble;
-                        // Swaps indices
-                        tempDouble = indices[j];
-                        indices[j] = indices[k];
-                        indices[k] = tempDouble;
-                    } // end swap
-                } // end inner for loop
-            } // end outer for loop
+                        if (lambda[j, 0] > lambda[k, 0]) // swap condition -- sorts high to low
+                        {
+                            // Swap lambdas
+                            tempDouble = lambda[j, 0]; // lambda[row, column]
+                            lambda[j, 0] = lambda[k, 0];
+                            lambda[k, 0] = tempDouble;
+                            // Swaps indices
+                            tempDouble = indices[j];
+                            indices[j] = indices[k];
+                            indices[k] = tempDouble;
+                        } // end swap
+                    } // end inner for loop
+                } // end outer for loop
 
-            // Merge the two column vectors in matrix before sending it back
-            // First column is sorted lambdas, second is their corresponding indices
-            a2DArray = new double[rows, 2]; // rows, columns
-            for (int j = 0; j < rows; j++)
-            {
-                a2DArray[j, 0] = lambda[j, 0];
-                a2DArray[j, 1] = indices[j];
+                // Merge the two column vectors in matrix before sending it back
+                // First column is sorted lambdas, second is their corresponding indices
+                a2DArray = new double[rows, 2]; // rows, columns
+                for (int j = 0; j < rows; j++)
+                {
+                    a2DArray[j, 0] = lambda[j, 0];
+                    a2DArray[j, 1] = indices[j];
 
-            } // end outer for loop
+                } // end outer for loop
 
-            // Puts the 2d array a2DArray into aMatrix
-            aMatrix = Matrix.Create(a2DArray);
+                // Puts the 2d array a2DArray into aMatrix
+                aMatrix = Matrix.Create(a2DArray);
 
-            return aMatrix; // Returns a matrix with column 1 of lambda values, column 2 of indices
+                return aMatrix; // Returns a matrix with column 1 of lambda values, column 2 of indices
+            }
+            else
+                return null;
         }
+
         // code by abhishikth chandra
         // this is the code for function repmat
         // it increases the dinention of matrix mXn times
@@ -130,7 +136,7 @@ namespace DRToolbox.Techniques
             numCols = origMatrix.ColumnCount;
 
             onesMatrix = Matrix.Ones(numRows);
-            onesMatrix = onesMatrix.GetMatrix(0, (numRows-1), 0, 0);
+            onesMatrix = onesMatrix.GetMatrix(0, (numRows - 1), 0, 0);
 
             demeaner = onesMatrix * computeMean(origMatrix);
 
@@ -138,7 +144,13 @@ namespace DRToolbox.Techniques
 
             transposeMatrix = Matrix.Transpose(demeanedMatrix);
 
-            retMatrix = demeanedMatrix * transposeMatrix;
+            // should be the other way round
+            //retMatrix = demeanedMatrix * transposeMatrix;
+
+            // changed code, ensures that cov now returns dim x dim
+            // where dim --> orig number of dimensions (eg. 4 for the first sample file)
+            retMatrix = transposeMatrix * demeanedMatrix;
+            //retMatrix = demeanedMatrix * transposeMatrix;
             retMatrix = retMatrix * (1.0 / (double)(numRows - 1));
 
             return retMatrix;
@@ -253,39 +265,6 @@ namespace DRToolbox.Techniques
                 return vals;
             }
             catch { return vals; }
-        }
-
-
-
-        
-        /// <summary>Matrix multiplication of A * B</summary>
-        /// <param name="A">First matrix, order matters</param>
-        /// <param name="B">Second matrix, order matters</param>
-        /// <returns></returns>
-        public Matrix MatrixMulu(Matrix A, Matrix B)
-        {
-            // Determines number of rows in the resulting matrix
-            int rows = 0;
-            if (B.RowCount > A.RowCount) { rows = A.RowCount; }
-            else rows = B.RowCount;
-
-            // Determines number of columns in the resulting matrix
-            int columns = 0;
-            if (B.ColumnCount > A.ColumnCount) { columns = A.ColumnCount; }
-            else columns = B.ColumnCount;
-
-            // Number of Columns given by the number of desired dimensions
-            Matrix X = new Matrix(rows, columns);
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    X[i, j] = A[i, j] * B[i, j];
-                }
-            }
-
-            return X;
         }
 
 } // End Class

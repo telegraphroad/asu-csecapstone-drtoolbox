@@ -37,9 +37,9 @@ namespace DRToolbox.Techniques
         /// <param name="A">Data matrix being operated upon</param>
         /// <param name="num_dims">Number of desired dimensions.  This is the number of columns in the returned matrix.  This is also the number of eigenvectors the data is being mapped to.</param>
         /// <returns></returns>
-        public static Matrix getPCA(Matrix A, int num_dims)
+        public static Matrix getPCA(Matrix A, int numdims)
         {
-            
+            int num_dims = 1;
             // Local variables
             Matrix C; // Stores covariance matrix to find eigen-values/eigen-vectors
             MatrixFunctions functions = new MatrixFunctions(); // Access matrix functions
@@ -65,7 +65,7 @@ namespace DRToolbox.Techniques
             eigenVectors = eVals.EigenVectors; // Returns a matrix of eigenvectors.  Each e-vector is in a column
 
             // Sort the eigen values
-            lambdas = functions.eigenSort(lambdas); // Returns a two-column matrix of e-vals and indices
+            lambdas = functions.eigenSort(lambdas, "descending"); // Returns a two-column matrix of e-vals and indices
             indicesColumn = functions.matrixColumnToIntArray(lambdas, 2); // Returns the second column
             
             // Puts the first num_dims indices into the finalized indices array
@@ -76,15 +76,15 @@ namespace DRToolbox.Techniques
 
             // Create a new matrix with num_dims(given by number of entries in indices array) of eigen-vector columns
             // Sets the matrix, with columns given by eigenVectors at the indices provided.
-            Matrix eVects = eigenVectors.GetMatrix(0, eigenVectors.RowCount - 1, indices);
-            //Matrix eVects = new Matrix(eigenVectors.RowCount, num_dims);
-            //eVects.SetMatrix(0, eigenVectors.RowCount - 1, indices, eigenVectors); // Sets the matrix to be a collection of columns from the eigenVectors column
+            Matrix eVects = eigenVectors.GetMatrix(0, eigenVectors.RowCount - 1, indices); // Eigenvectors in columns(this is how e-vectors are represented in eVals.eigenVectors)
 
+            //Matrix eVects = eigenVectors.GetMatrix(indices, 0, eigenVectors.ColumnCount - 1); // Eigenvectors in rows
 
 
             // Map the data via matrix multiplication
             // Number of columns in A must be equal to the number of rows in eVects
-            Matrix aMappedMatrix = functions.MatrixMulu(A, eVects);
+            Matrix aMappedMatrix = A * eVects;
+            aMappedMatrix = aMappedMatrix * (1 / -1.0);
             // Soft requirement -- eVects # of rows must be equal to the number of columns in A
                 // IE - length of eigen-vectors will be the number of dimensions given in the input data
             
