@@ -59,6 +59,18 @@
     <Compile Include="Graphs\XYScatterPlot.designer.cs">
       <DependentUpon>XYScatterPlot.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImportedFileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportedFileForm.Designer.cs">
+      <DependentUpon>ImportedFileForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\GraphMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Menus\TechniqueMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FileImport\CSV\CSVImportDialog.resx">
@@ -69,6 +81,10 @@
       <DependentUpon>XYScatterPlot.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ImportedFileForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ImportedFileForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -77,6 +93,10 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\RanTechniqueControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>RanTechniqueControl.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -96,6 +116,12 @@
     </Compile>
     <Compile Include="MainForm.designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RanTechniqueControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\RanTechniqueControl.Designer.cs">
+      <DependentUpon>RanTechniqueControl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
