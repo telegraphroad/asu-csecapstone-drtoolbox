@@ -37,9 +37,8 @@ namespace DRToolbox.Techniques
         /// <param name="A">Data matrix being operated upon</param>
         /// <param name="num_dims">Number of desired dimensions.  This is the number of columns in the returned matrix.  This is also the number of eigenvectors the data is being mapped to.</param>
         /// <returns></returns>
-        public static Matrix getPCA(Matrix A, int numdims)
+        public static Matrix getPCA(Matrix A, int num_dims)
         {
-            int num_dims = 1;
             // Local variables
             Matrix C; // Stores covariance matrix to find eigen-values/eigen-vectors
             MatrixFunctions functions = new MatrixFunctions(); // Access matrix functions
