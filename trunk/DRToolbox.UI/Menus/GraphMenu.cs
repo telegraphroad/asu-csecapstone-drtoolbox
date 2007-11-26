@@ -35,7 +35,7 @@ namespace DRToolbox.UI.Menus
             xyPlot.XAxisTitle = "X-Axis";
             xyPlot.YAxisTitle = "Y-Axis";
             xyPlot.GraphDataList = list;
-            //xyPlot.MdiParent = this;
+            xyPlot.MdiParent = MainForm.ActiveForm;
             xyPlot.DrawXYScatterPlot();
             xyPlot.Show();
         }
@@ -56,6 +56,13 @@ namespace DRToolbox.UI.Menus
         #region Event Handlers
         private void menuDataset_Click(object sender, EventArgs e)
         {
+            //Display Data imported in a DataGridView
+            DatasetForm data = new DatasetForm();
+            data.FormTitle = "Dataset Imported and Processed";
+            data.Dataset = ListConversions.MatrixToDataTable(techniqueResults);
+            data.FillDataGridView();
+            data.MdiParent = MainForm.ActiveForm;
+            data.Show();
         }
         private void menuGraph_Click(object sender, EventArgs e)
         {

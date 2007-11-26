@@ -44,6 +44,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatasetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatasetForm.Designer.cs">
+      <DependentUpon>DatasetForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileImport\CSV\CSVImportDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DatasetForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DatasetForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileImport\CSV\CSVImportDialog.resx">
       <DependentUpon>CSVImportDialog.cs</DependentUpon>
       <SubType>Designer</SubType>

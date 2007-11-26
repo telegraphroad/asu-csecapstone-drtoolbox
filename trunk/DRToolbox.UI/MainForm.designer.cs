@@ -32,6 +32,7 @@ namespace DRToolbox.UI
             this.mItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemImportFile = new System.Windows.Forms.ToolStripMenuItem();
             this.menuImportFileCSV = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemWindow = new System.Windows.Forms.ToolStripMenuItem();
             this.minimizeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +44,6 @@ namespace DRToolbox.UI
             this.mItemTutorial = new System.Windows.Forms.ToolStripMenuItem();
             this.mItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusBar = new System.Windows.Forms.StatusStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,20 +74,25 @@ namespace DRToolbox.UI
             this.mItemImportFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuImportFileCSV});
             this.mItemImportFile.Name = "mItemImportFile";
-            this.mItemImportFile.Size = new System.Drawing.Size(148, 22);
+            this.mItemImportFile.Size = new System.Drawing.Size(152, 22);
             this.mItemImportFile.Text = "Import &File...";
             // 
             // menuImportFileCSV
             // 
             this.menuImportFileCSV.Name = "menuImportFileCSV";
-            this.menuImportFileCSV.Size = new System.Drawing.Size(196, 22);
+            this.menuImportFileCSV.Size = new System.Drawing.Size(185, 22);
             this.menuImportFileCSV.Text = "Comma Delimited (CSV)";
             this.menuImportFileCSV.Click += new System.EventHandler(this.menuImportFileCSV_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // mItemExit
             // 
             this.mItemExit.Name = "mItemExit";
-            this.mItemExit.Size = new System.Drawing.Size(148, 22);
+            this.mItemExit.Size = new System.Drawing.Size(152, 22);
             this.mItemExit.Text = "E&xit";
             this.mItemExit.Click += new System.EventHandler(this.mItemExit_Click);
             // 
@@ -106,30 +111,30 @@ namespace DRToolbox.UI
             // minimizeAllToolStripMenuItem
             // 
             this.minimizeAllToolStripMenuItem.Name = "minimizeAllToolStripMenuItem";
-            this.minimizeAllToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.minimizeAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.minimizeAllToolStripMenuItem.Text = "&Minimize All";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(138, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // cascadeToolStripMenuItem
             // 
             this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cascadeToolStripMenuItem.Text = "&Cascade";
             // 
             // tileToolStripMenuItem
             // 
             this.tileToolStripMenuItem.Name = "tileToolStripMenuItem";
-            this.tileToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.tileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tileToolStripMenuItem.Text = "Tile &Horizontal";
             // 
             // tileVerticalToolStripMenuItem
             // 
             this.tileVerticalToolStripMenuItem.Name = "tileVerticalToolStripMenuItem";
-            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tileVerticalToolStripMenuItem.Text = "Tile &Vertical";
             // 
             // helpToolStripMenuItem
@@ -144,13 +149,13 @@ namespace DRToolbox.UI
             // mItemTutorial
             // 
             this.mItemTutorial.Name = "mItemTutorial";
-            this.mItemTutorial.Size = new System.Drawing.Size(121, 22);
+            this.mItemTutorial.Size = new System.Drawing.Size(152, 22);
             this.mItemTutorial.Text = "T&utorial";
             // 
             // mItemAbout
             // 
             this.mItemAbout.Name = "mItemAbout";
-            this.mItemAbout.Size = new System.Drawing.Size(121, 22);
+            this.mItemAbout.Size = new System.Drawing.Size(152, 22);
             this.mItemAbout.Text = "&About";
             this.mItemAbout.Click += new System.EventHandler(this.mItemAbout_Click);
             // 
@@ -161,11 +166,6 @@ namespace DRToolbox.UI
             this.statusBar.Size = new System.Drawing.Size(840, 22);
             this.statusBar.TabIndex = 1;
             this.statusBar.Text = "Status Bar";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
             // 
             // MainForm
             // 
@@ -179,7 +179,7 @@ namespace DRToolbox.UI
             this.MainMenuStrip = this.menuMain;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Dimension Reduction Toolbox v0.25";
+            this.Text = "Dimension Reduction Toolbox v0.5";
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             this.ResumeLayout(false);

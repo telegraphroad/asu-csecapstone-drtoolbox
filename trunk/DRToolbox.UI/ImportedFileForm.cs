@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 using DRToolbox.UI.FileImport;
 using DRToolbox.UI.Menus;
+using DRToolbox.Utilites;
 
 namespace DRToolbox.UI
 {
@@ -70,5 +71,23 @@ namespace DRToolbox.UI
             menuTechniques.Show(btnRunTechnique, new Point(0, btnRunTechnique.Height));
         }
         #endregion
+
+        private void btnViewDataset_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Display Data imported in a DataGridView
+                DatasetForm data = new DatasetForm();
+                data.FormTitle = "Imported File (Not processed yet)";
+                data.Dataset = ListConversions.MatrixToDataTable(importFile.ImportedData);
+                data.FillDataGridView();
+                data.MdiParent = MainForm.ActiveForm;
+                data.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

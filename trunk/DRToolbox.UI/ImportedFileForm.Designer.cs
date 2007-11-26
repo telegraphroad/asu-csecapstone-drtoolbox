@@ -80,8 +80,9 @@ namespace DRToolbox.UI
             this.btnViewDataset.Name = "btnViewDataset";
             this.btnViewDataset.Size = new System.Drawing.Size(105, 23);
             this.btnViewDataset.TabIndex = 4;
-            this.btnViewDataset.Text = "View Dataset";
+            this.btnViewDataset.Text = "View Imported File";
             this.btnViewDataset.UseVisualStyleBackColor = true;
+            this.btnViewDataset.Click += new System.EventHandler(this.btnViewDataset_Click);
             // 
             // lblTechniques
             // 
