@@ -4,7 +4,7 @@ using System.Text;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 
-// updated 10/30/07
+// updated 11/27/07
 
 namespace DRToolbox.Techniques
 {
@@ -14,6 +14,8 @@ namespace DRToolbox.Techniques
     /// </summary>
     public class MatrixFunctions
     {
+        double[,] indices;
+
         public MatrixFunctions()
         {
         }
@@ -28,7 +30,8 @@ namespace DRToolbox.Techniques
             double[,] a2DArray;
             double tempDouble;
             int rows = lambda.RowCount; // same as double[].Length
-            double[] indices = new double[rows];
+            int columns = lambda.ColumnCount;
+            indices = new double[rows, 1]; // column vector
 
             // Case for non NxN matrices
             //if(rows > columns) {size = columns;}
@@ -40,7 +43,7 @@ namespace DRToolbox.Techniques
                 // Populate indices because the lambdas are already ordered 1, 2, 3, 4 ...
                 for (int i = 0; i < rows; i++)
                 {
-                    indices[i] = (Double)i;
+                    indices[i, 0] = (Double)i;
                 }
 
                 // an n^2 sorting algorithm
@@ -55,9 +58,9 @@ namespace DRToolbox.Techniques
                             lambda[j, 0] = lambda[k, 0];
                             lambda[k, 0] = tempDouble;
                             // Swaps indices
-                            tempDouble = indices[j];
-                            indices[j] = indices[k];
-                            indices[k] = tempDouble;
+                            tempDouble = indices[j, 0];
+                            indices[j, 0] = indices[k, 0];
+                            indices[k, 0] = tempDouble;
                         } // end swap
                     } // end inner for loop
                 } // end outer for loop
@@ -68,7 +71,7 @@ namespace DRToolbox.Techniques
                 for (int j = 0; j < rows; j++)
                 {
                     a2DArray[j, 0] = lambda[j, 0];
-                    a2DArray[j, 1] = indices[j];
+                    a2DArray[j, 1] = indices[j,0];
 
                 } // end outer for loop
 
@@ -76,6 +79,40 @@ namespace DRToolbox.Techniques
                 aMatrix = Matrix.Create(a2DArray);
 
                 return aMatrix; // Returns a matrix with column 1 of lambda values, column 2 of indices
+            }
+            else if (s == "ascending")
+            {
+
+                // Populate indices because the lambdas are already ordered 1, 2, 3, 4 ...
+                for (int i = 0; i < rows; i++)
+                {
+                    indices[i, 0] = (Double)i;
+                }
+
+                // an n^2 sorting algorithm, performed for each dimension(column) in the matrix
+                for (int j = 0; j < columns; j++)
+                {
+                    for (int k = 0; k < rows; k++)
+                    {
+                        for (int l = k; l < rows; l++)
+                        {
+                            if (lambda[l, j] < lambda[k, j]) // swap condition -- sorts low to high
+                            {
+                                // Swap entries
+                                tempDouble = lambda[k, j]; // lambda[row, column]
+                                lambda[k, j] = lambda[l, j];
+                                lambda[l, j] = tempDouble;
+
+                                // Swaps indices
+                                tempDouble = indices[j, 0];
+                                indices[j, 0] = indices[k, 0];
+                                indices[k, 0] = tempDouble;
+                            } // end swap
+                        } // end inner for(rows)
+                    } // end inner for loop(rows)
+                } // end outer for loop(columns)
+
+                return lambda;
             }
             else
                 return null;
@@ -134,7 +171,6 @@ namespace DRToolbox.Techniques
 
             numRows = origMatrix.RowCount;
             numCols = origMatrix.ColumnCount;
-
             onesMatrix = Matrix.Ones(numRows);
             onesMatrix = onesMatrix.GetMatrix(0, (numRows - 1), 0, 0);
 
@@ -235,7 +271,8 @@ namespace DRToolbox.Techniques
         }
 
         /// <summary>
-        /// Puts the Nth column of the Matrix into a single double array
+        /// Puts the Nth column of the Matrix into a single double array.
+        /// Used to find lambda values during eigenSort.
         /// </summary>
         /// <param name="M">Matrix having it's column converted to a double[]</param>
         /// <param name="N">The Nth column to convert to double[]</param>
@@ -251,6 +288,13 @@ namespace DRToolbox.Techniques
             return vals;
         }
 
+        /// <summary>
+        /// Converts a single column of a matrix into an integer array.
+        /// Used to find indice values during eigenSort.
+        /// </summary>
+        /// <param name="M"></param>
+        /// <param name="N">The column number to be put in the array</param>
+        /// <returns>An array of integers</returns>
         public int[] matrixColumnToIntArray(Matrix M, int N)
         {
             int[] vals = new int[M.RowCount];
@@ -267,5 +311,199 @@ namespace DRToolbox.Techniques
             catch { return vals; }
         }
 
-} // End Class
-}// end namespace Techniques>>>>>>> .r19
+        /// <summary>
+        /// Forces all negative entries in a matrix to become positive.
+        /// </summary>
+        /// <param name="N">Matrix being operated upon</param>
+        /// <returns>An all-positive matrix</returns>
+        public Matrix absolute(Matrix N)
+        {
+            int numRows = N.RowCount;
+            int numColumns = N.ColumnCount;
+
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    if (N[i, j] < 0.0)
+                        N[i, j] = N[i, j] * -1.0;
+                }
+            }
+            return N;
+        } // end absolute
+
+
+        /// <summary>
+        /// Find the indices of the nearest neighbors for each data point in M.
+        /// Works for NxN matrices
+        /// Works for NxM matrices
+        /// </summary>
+        /// <param name="M"></param>
+        /// <param name="k">Number of desired nearest neighbors</param>
+        /// <returns>Adjacency matrix X</returns>
+        public Matrix find_nearestNeighbors(Matrix M, int k)
+        {
+            int index = 0;
+            Matrix indicesMatrix;
+            Matrix transposeM = Matrix.Transpose(M);
+            int numColumns = transposeM.ColumnCount;
+
+            Matrix sparseMatrix = Matrix.Zeros(numColumns);
+            
+
+            // Squares each entry // rows i, columns j
+            Matrix squaredM = Matrix.Create(transposeM);
+            for (int i = 0; i < numColumns; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    squaredM[i, j] = squaredM[i, j] * squaredM[i, j];
+                }
+            }
+            // Returns a row vector
+            double[,] rowVector = new Double[1, M.ColumnCount];
+            Matrix sumSquaredM = Matrix.Create(rowVector);
+            double columnSum = 0.0;
+            for (int i = 0; i < numColumns; i++)
+            {
+                columnSum = 0;
+                for (int j = 0; j < numColumns; j++)
+                {
+                    columnSum = columnSum + squaredM[j, i];
+                }
+                sumSquaredM[0, i] = columnSum;
+            }
+
+            // an 1xN matrix of ones
+            double[,] ones = new Double[1, numColumns];
+            Matrix onesMatrix = Matrix.Create(ones);
+
+            double[,] column = new Double[M.RowCount, 1]; // A column vector
+            Matrix columnMatrix;
+            double sumOfSquares = 0.0;
+            Matrix squaredMatrix;
+            Matrix sumMatrix;
+            Matrix absoluteSumMatrix;
+            for (int i = 0; i < numColumns; i++)
+            {
+                //column = matrixColumnToDoubleArray(transposeM, i + 1); // For columns 1 to numColumns
+                columnMatrix = transposeM.GetMatrix(0, transposeM.RowCount - 1, i, i); // Get the i'th column
+                //columnMatrix = new Matrix(column.Length, 1); // columns, rows
+                //columnMatrix.SetMatrix(0, column.Length - 1, 0, 0);
+
+                for ( int j = 0; j < columnMatrix.RowCount; j++ )
+                {
+                    // Squares each entry in the column vector
+                    sumOfSquares = sumOfSquares + (columnMatrix[j,0] * columnMatrix[j,0]); // Row, column
+                }
+                squaredMatrix = Matrix.Transpose(columnMatrix) * M;
+
+                sumMatrix = (sumOfSquares * onesMatrix) + (sumSquaredM - (2 * squaredMatrix));
+                absoluteSumMatrix = absolute(sumMatrix);
+
+                // Sort each column in ascending order
+                absoluteSumMatrix = eigenSort(sumMatrix, "ascending");
+
+                // Indices column is available globally
+                // Grab the first k columns
+                absoluteSumMatrix = absoluteSumMatrix.GetMatrix(0, absoluteSumMatrix.RowCount - 1, 0, k - 1);
+                indicesMatrix = Matrix.Create(indices);
+                indicesMatrix = indicesMatrix.GetMatrix(0, absoluteSumMatrix.RowCount - 1, 0, k - 1);
+                absoluteSumMatrix = nonzero(absoluteSumMatrix); // changes zero entries into 0.0000001
+                
+                
+                // Populate the row(given by for loop iteration) of the sparse matrix
+                // with the entry in absoluteSumMatrix.  Note that each entry in this 
+                for(int j = 0; j < indices.Length; j++)
+                {
+                    index = (int)indices[j,0];
+                    sparseMatrix[i, index] = absoluteSumMatrix[i, index];
+                } // end inner for
+            } // end outer for
+
+            return sparseMatrix;
+        } // end find_nearestNeighbors
+
+        /// <summary>
+        /// Turns any zero entries in the matrix into a small number(0.0000001)
+        /// </summary>
+        /// <param name="M">The matrix with potential zero entries</param>
+        /// <returns>The matrix with all zero entries modified.</returns>
+        public Matrix nonzero(Matrix M)
+        {
+            int rowCount = M.RowCount;
+            int colCount = M.ColumnCount;
+
+            // [rows, columns]
+            for (int i = 0; i < colCount; i++)
+            {
+                for (int j = 0; j < rowCount; j++)
+                {
+                    if (M[j, i] == 0.0)
+                    { M[j, i] = 0.0000001; }
+                }
+            }
+            return M;
+        } // end nonzero
+
+
+        /// <summary>
+        /// Creates a sparse matrix, with a number of non-zero entries.
+        /// </summary>
+        /// <param name="rows">Dimensions of desired matrix in rows</param>
+        /// <param name="columns">Dimensions of desired matrix in columns</param>
+        /// <param name="k">Value for the nonzero entries</param>
+        /// <param name="l">Maximum number of non-zero entries in the matrix</param>
+        /// <returns>A sparse matrix.</returns>
+        public Matrix sparse(int rows, int columns, double k, int l)
+        {
+            int counter = 0;
+            Matrix M = new Matrix(rows, columns);
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    counter++;
+                    if (counter <= l)
+                    {
+                        M[i, j] = k;
+                    }
+                    else
+                        M[i, j] = 0;
+
+                } // end inner for
+            } // end outer for
+            return M;
+        }
+
+        /// <summary>
+        /// Divides the entries of a matrix by a certain double value.
+        /// Also checks for divide by zero.
+        /// </summary>
+        /// <param name="M">Matrix whose entries are to be divided</param>
+        /// <param name="val">Divisor.</param>
+        /// <returns>A matrix with entries that are smaller(for val > 1) or larger(for val < 1)</returns>
+        public Matrix matrixDivide(Matrix M, double val)
+        {
+            int rowCount = M.RowCount;
+            int colCount = M.ColumnCount;
+
+            if (val != 0.0)
+            {
+                // [rows, columns]
+                for (int i = 0; i < colCount; i++)
+                {
+                    for (int j = 0; j < rowCount; j++)
+                    {
+                        if (M[i, j] != 0.0)
+                        {
+                            M[i, j] = M[i, j] / val;
+                        }
+                    }
+                }
+            } // end check for zero
+            return M;
+        }
+
+    } // End Class
+}// end namespace Techniques

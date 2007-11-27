@@ -4,7 +4,7 @@ using System.Text;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 
-// updated 10/30/07
+// updated 11/26/07
 
 namespace DRToolbox.Techniques
 {
@@ -46,7 +46,7 @@ namespace DRToolbox.Techniques
             double[] lambda; // A sorted array of lambda values
             int[] indicesColumn; // A sorted array of indices corresponding to lambda values
             int[] indices = new int[num_dims]; // Contains the first num_dims entries in the indicesColumn
-            Matrix eigenVectors; // Each column in an eigen-vector
+            Matrix eigenVectors; // Each column is an eigen-vector
 
             // Zeroes out the mean of the data IE data centered about zero
             A = A - functions.Repmat(functions.computeMean(A), A.RowCount, 1);
@@ -86,7 +86,6 @@ namespace DRToolbox.Techniques
             aMappedMatrix = aMappedMatrix * (1 / -1.0);
             // Soft requirement -- eVects # of rows must be equal to the number of columns in A
                 // IE - length of eigen-vectors will be the number of dimensions given in the input data
-            
 
             return aMappedMatrix;
         }
