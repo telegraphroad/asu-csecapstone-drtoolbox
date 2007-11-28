@@ -37,6 +37,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Isomap.cs" />
     <Compile Include="LLE.cs" />
     <Compile Include="MatrixFunctions.cs" />
     <Compile Include="PCA.cs" />
