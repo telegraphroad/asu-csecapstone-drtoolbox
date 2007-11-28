@@ -42,7 +42,7 @@ namespace DRToolbox.UI.Menus
             {
                 // Run Isomap technique
                 // For now passing r=1.0 as the default value. This will change later to allow the user to specify r
-                //results = Isomap.getIsomap(importFile.ImportedData, 3, 1.0);
+                results = Isomap.doIsomap(importFile.ImportedData, 3, 1.0);
             }
             //LLE
             if (techniqueName == TechniqueNames.LLE)
