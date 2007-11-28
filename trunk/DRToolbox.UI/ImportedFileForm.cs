@@ -70,8 +70,6 @@ namespace DRToolbox.UI
             // Show menu
             menuTechniques.Show(btnRunTechnique, new Point(0, btnRunTechnique.Height));
         }
-        #endregion
-
         private void btnViewDataset_Click(object sender, EventArgs e)
         {
             try
@@ -89,5 +87,6 @@ namespace DRToolbox.UI
                 MessageBox.Show(ex.Message);
             }
         }
+        #endregion
     }
 }
