@@ -31,11 +31,31 @@ namespace DRToolbox.UI.Menus
             // Local Variables
             Matrix results = null;
 
-            // Which technique is this?
+            //PCA
             if(techniqueName == TechniqueNames.PCA)
             {
                 // Run PCA technique
                 results = PCA.getPCA(importFile.ImportedData, 3);
+            }
+            //Isomap
+            if (techniqueName == TechniqueNames.Isomap)
+            {
+                // Run Isomap technique
+                // For now passing r=1.0 as the default value. This will change later to allow the user to specify r
+                //results = Isomap.getIsomap(importFile.ImportedData, 3, 1.0);
+            }
+            //LLE
+            if (techniqueName == TechniqueNames.LLE)
+            {
+                // Run LLE technique
+                // For now passing k=12 as the default value. This will change later to allow the user to specify k
+                results = LLE.getLLE(importFile.ImportedData, 3, 12);
+            }
+            //MDS
+            if (techniqueName == TechniqueNames.MDS)
+            {
+                // Run MDS technique
+                //results = MDS.getMDS(importFile.ImportedData, 3);
             }
 
             // Return results
