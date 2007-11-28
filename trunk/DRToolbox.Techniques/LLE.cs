@@ -7,7 +7,7 @@ using MathNet.Numerics.LinearAlgebra;
 namespace DRToolbox.Techniques
 {
 
-    class LLE
+    public class LLE
     {
         private Matrix aMatrix;
 
