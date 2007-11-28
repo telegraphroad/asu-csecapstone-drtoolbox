@@ -16,7 +16,7 @@
         "Entry"
         {
         "MsmKey" = "8:_3B907B1B12545406FBF40931CD0A50F1"
-        "OwnerKey" = "8:_6F80EDD09D9BE80A1650974455359274"
+        "OwnerKey" = "8:_4052BFE81E0D4B3C92E18CA1FB4508EF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -29,6 +29,18 @@
         {
         "MsmKey" = "8:_3B907B1B12545406FBF40931CD0A50F1"
         "OwnerKey" = "8:_69DED3FF48724F3BA240CC352EA4BE21"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3B907B1B12545406FBF40931CD0A50F1"
+        "OwnerKey" = "8:_B722286FABC3114521B9974A14E9D62C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3B907B1B12545406FBF40931CD0A50F1"
+        "OwnerKey" = "8:_6F80EDD09D9BE80A1650974455359274"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,37 +82,37 @@
         "Entry"
         {
         "MsmKey" = "8:_ED7BC43AE66AEA9CE2817EB140C79115"
+        "OwnerKey" = "8:_4052BFE81E0D4B3C92E18CA1FB4508EF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ED7BC43AE66AEA9CE2817EB140C79115"
+        "OwnerKey" = "8:_E568D0782375410AA0BBF5656079C2C0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ED7BC43AE66AEA9CE2817EB140C79115"
         "OwnerKey" = "8:_69DED3FF48724F3BA240CC352EA4BE21"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3B907B1B12545406FBF40931CD0A50F1"
+        "MsmKey" = "8:_ED7BC43AE66AEA9CE2817EB140C79115"
+        "OwnerKey" = "8:_B722286FABC3114521B9974A14E9D62C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_4052BFE81E0D4B3C92E18CA1FB4508EF"
+        "OwnerKey" = "8:_69DED3FF48724F3BA240CC352EA4BE21"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_E568D0782375410AA0BBF5656079C2C0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_69DED3FF48724F3BA240CC352EA4BE21"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_ED7BC43AE66AEA9CE2817EB140C79115"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -113,6 +125,24 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_6F80EDD09D9BE80A1650974455359274"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_4052BFE81E0D4B3C92E18CA1FB4508EF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_ED7BC43AE66AEA9CE2817EB140C79115"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3B907B1B12545406FBF40931CD0A50F1"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -133,13 +163,24 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                }
+            }
         }
         "Release"
         {
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\DRToolbox Setup v0.25.msi"
+        "OutputFilename" = "8:Release\\DRToolbox Setup v0.5.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -149,6 +190,17 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                }
+            }
         }
     }
     "Deployable"
@@ -356,7 +408,7 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:DRToolbox Setup v0.25"
+        "ProductName" = "8:DRToolbox Setup v0.5"
         "ProductCode" = "8:{06BAD32D-57D3-4CE6-93CF-46EEFD401CD5}"
         "PackageCode" = "8:{2BEE7E21-E8CD-4594-BCC4-30004B42A224}"
         "UpgradeCode" = "8:{EBCD78F7-8D64-460A-8BCF-61909B0B5192}"
@@ -364,11 +416,11 @@
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.25.0"
+        "ProductVersion" = "8:0.50.0"
         "Manufacturer" = "8:Dimension Reduction Toolbox"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:DRToolbox Setup 0.25"
+        "Title" = "8:DRToolbox Setup 0.5"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Johnny Ahmad, Robert Russell, John Lankford, Kartik Talamadupula, Abhishikth Chandra"
         "Keywords" = "8:"
