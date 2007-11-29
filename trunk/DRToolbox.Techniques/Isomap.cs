@@ -86,17 +86,40 @@ namespace DRToolbox.Techniques
         /// Computes the pair-wise euclidean distance between the points given
         /// through the parameter matrix.
         /// </summary>
-        /// <param name="origMatrix">The matrix that contains the points.</param>
+        /// <param name="A">The matrix that contains the points.</param>
         /// <returns>A Matrix containing the pair-wise euclidean distances between points.</returns>
-        public static Matrix euclideanDistance(Matrix origMatrix)
+        public static Matrix euclideanDistance(Matrix A)
         {
-            // filler
-            Matrix retMatrix = new Matrix(1,1);
+            int x = A.RowCount;
+            int y = A.ColumnCount;
+            double p = 0.0;
+            double q = 0.0;
 
-            /** NEEDS TO BE FILLED IN **/
+            Matrix B = new Matrix(x,x);
 
-            // filler to avoid errors
-            return retMatrix;
+            for (int i = 0; i < x; i++)
+            {
+                for ( int j = 0; j < x; j++)
+                {
+	                if(i == j)
+	                {
+		                B[i,j] = 0;
+	                }
+	                else
+	                {
+        			
+		                for ( int k = 0; k < y; k++)
+		                {
+			                p = p + Math.Pow((A[i,k] - A[j,k]),2.0);
+		                }
+
+                        q = Math.Pow(p,0.5);        				
+		                B[i,j] = q;
+	                }
+                }
+            }
+
+            return B;	
         }
 
         /// <summary>
