@@ -67,7 +67,7 @@ namespace DRToolbox.Techniques
             Matrix distMatrix_g = floydWarshall(distMatrix_r);
             EigenvalueDecomposition eV = new EigenvalueDecomposition(distMatrix_g);
             Matrix eVM = eV.EigenVectors;
-            Matrix eVM_top = eVM.GetMatrix(0, (num_dims - 1), 0, eVM.ColumnCount);
+            Matrix eVM_top = eVM.GetMatrix(0, (num_dims - 1), 0, (eVM.ColumnCount - 1));
             Matrix eVM_t_top = Matrix.Transpose(eVM_top);
 
             return eVM_t_top;
