@@ -4,7 +4,7 @@ using System.Text;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 
-// updated 11/27/07
+// updated 12/01/07
 
 namespace DRToolbox.Techniques
 {
@@ -71,7 +71,7 @@ namespace DRToolbox.Techniques
                 for (int j = 0; j < rows; j++)
                 {
                     a2DArray[j, 0] = lambda[j, 0];
-                    a2DArray[j, 1] = indices[j,0];
+                    a2DArray[j, 1] = indices[j, 0];
 
                 } // end outer for loop
 
@@ -79,9 +79,20 @@ namespace DRToolbox.Techniques
                 aMatrix = Matrix.Create(a2DArray);
 
                 return aMatrix; // Returns a matrix with column 1 of lambda values, column 2 of indices
-            }
+            } // end if
             else if (s == "ascending")
             {
+                //indices = new double[columns, 1];
+                // For row vectors, iterate through columns
+                /*if (columns > rows)
+                {
+                    temp = rows;
+                    rows = columns;
+                    columns = temp;
+                    lambda = Matrix.Transpose(lambda);
+                } */
+                indices = new double[rows, 1];
+
 
                 // Populate indices because the lambdas are already ordered 1, 2, 3, 4 ...
                 for (int i = 0; i < rows; i++)
@@ -90,29 +101,42 @@ namespace DRToolbox.Techniques
                 }
 
                 // an n^2 sorting algorithm, performed for each dimension(column) in the matrix
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < rows; j++)
                 {
                     for (int k = 0; k < rows; k++)
                     {
-                        for (int l = k; l < rows; l++)
+                        if (lambda[j, 0] < lambda[k, 0]) // swap condition -- sorts low to high
                         {
-                            if (lambda[l, j] < lambda[k, j]) // swap condition -- sorts low to high
-                            {
-                                // Swap entries
-                                tempDouble = lambda[k, j]; // lambda[row, column]
-                                lambda[k, j] = lambda[l, j];
-                                lambda[l, j] = tempDouble;
+                            // Swap lambdas
+                            tempDouble = lambda[j, 0]; // lambda[row, column]
+                            lambda[j, 0] = lambda[k, 0];
+                            lambda[k, 0] = tempDouble;
+                            // Swaps indices
+                            tempDouble = indices[j, 0];
+                            indices[j, 0] = indices[k, 0];
+                            indices[k, 0] = tempDouble;
+                        } // end swap
+                    } // end inner for(rows)
+                } // end inner for loop(rows)
 
-                                // Swaps indices
-                                tempDouble = indices[j, 0];
-                                indices[j, 0] = indices[k, 0];
-                                indices[k, 0] = tempDouble;
-                            } // end swap
-                        } // end inner for(rows)
-                    } // end inner for loop(rows)
-                } // end outer for loop(columns)
 
-                return lambda;
+
+
+                // Merge the two column vectors in matrix before sending it back
+                // First column is sorted lambdas, second is their corresponding indices
+                a2DArray = new double[rows, 2]; // rows, columns
+                for (int j = 0; j < rows; j++)
+                {
+                    a2DArray[j, 0] = lambda[j, 0];
+                    a2DArray[j, 1] = indices[j, 0];
+
+                } // end outer for loop
+
+                // Puts the 2d array a2DArray into aMatrix
+                aMatrix = Matrix.Create(a2DArray);
+
+                return aMatrix; // Returns a matrix with column 1 of lambda values, column 2 of indices
+
             }
             else
                 return null;
@@ -353,21 +377,22 @@ namespace DRToolbox.Techniques
 
             // Squares each entry // rows i, columns j
             Matrix squaredM = Matrix.Create(transposeM);
-            for (int i = 0; i < numColumns; i++)
+            for (int i = 0; i < squaredM.RowCount; i++)
             {
-                for (int j = 0; j < numColumns; j++)
+                for (int j = 0; j < squaredM.ColumnCount; j++)
                 {
                     squaredM[i, j] = squaredM[i, j] * squaredM[i, j];
                 }
             }
+
             // Returns a row vector
-            double[,] rowVector = new Double[1, M.ColumnCount];
+            double[,] rowVector = new Double[1, numColumns];
             Matrix sumSquaredM = Matrix.Create(rowVector);
             double columnSum = 0.0;
             for (int i = 0; i < numColumns; i++)
             {
                 columnSum = 0;
-                for (int j = 0; j < numColumns; j++)
+                for (int j = 0; j < squaredM.RowCount; j++)
                 {
                     columnSum = columnSum + squaredM[j, i];
                 }
@@ -376,6 +401,12 @@ namespace DRToolbox.Techniques
 
             // an 1xN matrix of ones
             double[,] ones = new Double[1, numColumns];
+            // Populate ones row vector
+            for (int i = 0; i < numColumns; i++)
+            {
+                ones[0, i] = 1.0;
+            }
+            // (1xN matrix)
             Matrix onesMatrix = Matrix.Create(ones);
 
             double[,] column = new Double[M.RowCount, 1]; // A column vector
@@ -394,30 +425,32 @@ namespace DRToolbox.Techniques
                 for ( int j = 0; j < columnMatrix.RowCount; j++ )
                 {
                     // Squares each entry in the column vector
-                    sumOfSquares = sumOfSquares + (columnMatrix[j,0] * columnMatrix[j,0]); // Row, column
+                    sumOfSquares = sumOfSquares + (columnMatrix[j, 0] * columnMatrix[j, 0]); // Row, column
                 }
-                squaredMatrix = Matrix.Transpose(columnMatrix) * M;
+                squaredMatrix = Matrix.Transpose(columnMatrix) * transposeM;
 
                 sumMatrix = (sumOfSquares * onesMatrix) + (sumSquaredM - (2 * squaredMatrix));
                 absoluteSumMatrix = absolute(sumMatrix);
 
                 // Sort each column in ascending order
-                absoluteSumMatrix = eigenSort(sumMatrix, "ascending");
+                absoluteSumMatrix = eigenSort(Matrix.Transpose(sumMatrix), "ascending"); // Should set indices to a k-wide array
 
                 // Indices column is available globally
-                // Grab the first k columns
-                absoluteSumMatrix = absoluteSumMatrix.GetMatrix(0, absoluteSumMatrix.RowCount - 1, 0, k - 1);
+                // Only care about the first k entries
+                absoluteSumMatrix = absoluteSumMatrix.GetMatrix(0, absoluteSumMatrix.RowCount-1, 0, 0);
                 indicesMatrix = Matrix.Create(indices);
-                indicesMatrix = indicesMatrix.GetMatrix(0, absoluteSumMatrix.RowCount - 1, 0, k - 1);
+                indicesMatrix = Matrix.Transpose(indicesMatrix);
+                //indicesMatrix = indicesMatrix.GetMatrix(0, absoluteSumMatrix.RowCount - 1, 0, k - 1);
+                indicesMatrix = indicesMatrix.GetMatrix(0, 0, 0, k - 1); // indicesMatrix is a row vector at this point
                 absoluteSumMatrix = nonzero(absoluteSumMatrix); // changes zero entries into 0.0000001
                 
                 
                 // Populate the row(given by for loop iteration) of the sparse matrix
-                // with the entry in absoluteSumMatrix.  Note that each entry in this 
-                for(int j = 0; j < indices.Length; j++)
+                // with the entry in absoluteSumMatrix
+                for(int j = 0; j < k; j++) // Only care about the first k+1 indices
                 {
                     index = (int)indices[j,0];
-                    sparseMatrix[i, index] = absoluteSumMatrix[i, index];
+                    sparseMatrix[i, index] = absoluteSumMatrix[index, 0] - 1; // Indices start from zero
                 } // end inner for
             } // end outer for
 
@@ -495,9 +528,9 @@ namespace DRToolbox.Techniques
                 {
                     for (int j = 0; j < rowCount; j++)
                     {
-                        if (M[i, j] != 0.0)
+                        if (M[j, i] != 0.0)
                         {
-                            M[i, j] = M[i, j] / val;
+                            M[j, i] = M[j, i] / val;
                         }
                     }
                 }

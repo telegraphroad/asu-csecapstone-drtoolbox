@@ -4,6 +4,8 @@ using System.Text;
 using MathNet.Numerics;
 using MathNet.Numerics.LinearAlgebra;
 
+// updated 12/01/07
+
 namespace DRToolbox.Techniques
 {
 
@@ -29,6 +31,7 @@ namespace DRToolbox.Techniques
         public static Matrix getLLE(Matrix A, int num_dims, int k)
         {
             MatrixFunctions functions = new MatrixFunctions(); // Access matrix functions
+            Matrix dividend;
 
             // Get dimensionality and number of dimensions
             int rowCount = A.RowCount;
@@ -59,14 +62,17 @@ namespace DRToolbox.Techniques
                     zerosArray[i, j] = 0.0;
                 }
             } // end outer for
+
             Matrix weightsMatrix = Matrix.Create(zerosArray);
+            Matrix weightsColumn;
             Matrix ones = Matrix.Ones(k);
             ones = ones.GetMatrix(0, k-1, 0, 0); // Row vector
             //double[] ones = new Double[k]
             Matrix sub, columns;
             int[] neighborsArray = new int[neighbors.RowCount];
-            for (int i = 0; i < rowCount; i++)
+            for (int i = 0; i < colCount; i++)
             {
+                // Get a neighborhood column
                 for(int j = 0; j < neighbors.RowCount; j++)
                 {
                     neighborsArray[j] = (int)neighbors[j, i];
@@ -76,24 +82,28 @@ namespace DRToolbox.Techniques
                 columns = Matrix.Transpose(sub) * sub;
 
                 // Compute covariance
-                // First : Find sum of eigen values
+                // First : Find sum
                 sum = 0.0;
                 for(int j = 0; j < columns.RowCount; j++)
                 {
                     sum = sum + columns[j, j];
                 }
+
+
                 // Next : Find covariance
                 columns = columns + Matrix.Identity(k, k) * tolerance * sum; // Sum is the sum of the diagonal entries of columns
                 // Regularize covariance
-                weightsMatrix.SetMatrix(0, weightsMatrix.RowCount - 1, 0, weightsMatrix.ColumnCount - 1, (columns.Inverse() * ones));
+                //columns = columns.Inverse();
+                weightsColumn = new Matrix(columns * ones);
                 // Finally : Solve the system
                 columnSum = 0.0;
                 for (int j = 0; j < weightsMatrix.RowCount; j++)
                 {
-                    columnSum = columnSum + weightsMatrix[j, i];
+                    columnSum = columnSum + weightsColumn[j, 0];
                 }
-                weightsMatrix.SetMatrix(0, weightsMatrix.RowCount - 1, 0, weightsMatrix.ColumnCount - 1, functions.matrixDivide(weightsMatrix.GetMatrix(0, weightsMatrix.RowCount - 1, 0, weightsMatrix.ColumnCount - 1), columnSum));
-                // Column sum should be 1
+                //weightsMatrix.SetMatrix(0, weightsMatrix.RowCount - 1, 0, weightsMatrix.ColumnCount - 1, functions.matrixDivide(weightsMatrix.GetMatrix(0, weightsMatrix.RowCount - 1, 0, weightsMatrix.ColumnCount - 1), columnSum));
+                dividend = functions.matrixDivide(weightsColumn.GetMatrix(0, weightsColumn.RowCount - 1, 0, weightsColumn.ColumnCount - 1), columnSum);
+                weightsMatrix.SetMatrix(0, dividend.RowCount - 1, i, i, dividend);
             } // end outer for loop
 
             // Define sparse cost matrix
@@ -109,6 +119,12 @@ namespace DRToolbox.Techniques
                 modifiedWeights = weightsMatrix.GetMatrix(0, weightsMatrix.RowCount - 1, i, i); // Gets the i'th column of the weights matrix
                 columnVector2 = functions.matrixColumnToIntArray(neighbors.GetMatrix(0, neighbors.RowCount - 1, i, i), 1); // Gets i'th column
                 // Three step process
+                // Validate indices first
+                for (int j = 0; j < columnVector2.Length; j++)
+                {
+                    if (columnVector2[j] < 0) columnVector2[j] = 0;
+                    else if (columnVector2[j] >= rowCount) columnVector2[j] = rowCount - 1;
+                }
                 reconstructionWeightsMatrix.SetMatrix(i, i, columnVector2, (reconstructionWeightsMatrix.GetMatrix(i, i, columnVector2) - Matrix.Transpose(modifiedWeights)));
 
                 reconstructionWeightsMatrix.SetMatrix(columnVector2, i, i, (reconstructionWeightsMatrix.GetMatrix(columnVector2, i, i) - modifiedWeights));
@@ -120,23 +136,27 @@ namespace DRToolbox.Techniques
             // The bottom-most eigen vectors will be used
             MathNet.Numerics.LinearAlgebra.EigenvalueDecomposition eVals = new EigenvalueDecomposition(reconstructionWeightsMatrix);
             double[] lambda = eVals.RealEigenvalues; // Returns real(diag(eVals));
+            //Matrix lambdas = new Matrix(reconstructionWeightsMatrix); // Constructs a 'column vector'-based Matrix of length given by lambda
             Matrix lambdas = new Matrix(lambda, lambda.Length); // Constructs a 'column vector'-based Matrix of length given by lambda
-            int[] indicesColumn; // A sorted array of indices corresponding to lambda values
+            int[] indicesColumn = new int[k]; // A sorted array of indices corresponding to lambda values
+            
             int[] indices = new int[num_dims]; // Contains the first num_dims entries in the indicesColumn
 
             lambdas = functions.eigenSort(lambdas, "ascending"); // Returns a two-column matrix of e-vals and indices
             indicesColumn = functions.matrixColumnToIntArray(lambdas, 2); // Returns the second column
+
             Matrix eigenVectors = eVals.EigenVectors; // Each column is an eigen-vector
 
 
             // Puts the first num_dims indices into the finalized indices array
             // Throw away the first index
-            for (int i = 1; i <= num_dims; i++)
+            for (int i = 1; i < num_dims; i++)
             {
                 indices[i] = indicesColumn[i];
             }
             Matrix mappedMatrix;
-            mappedMatrix = eigenVectors.GetMatrix(0, eigenVectors.RowCount - 1, indices);
+            mappedMatrix = eigenVectors.GetMatrix(indices, 0, eigenVectors.ColumnCount - 1);
+            mappedMatrix = Matrix.Transpose(mappedMatrix);
             return mappedMatrix;
         } // end getLLE
     } // end class LLE
