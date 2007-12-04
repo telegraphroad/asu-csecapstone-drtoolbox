@@ -537,6 +537,185 @@ namespace DRToolbox.Techniques
             } // end check for zero
             return M;
         }
+        /// <summary>
+        /// takes a matrix and computes eucledian distance between the points and give them in the square form.
+        /// </summary>
+        /// <param name="A">Matrix whose entries are used to find the eucledian square form matrix </param>
+        /// <returns>A squareform matrix</returns>
+        
+        public Matrix squareform(Matrix A)
+        {
+            int x = A.RowCount;
+            int y = A.ColumnCount;
+            double p = 0.0;
+            double q = 0.0;
+
+            Matrix B = new Matrix(x,x);
+
+            for (int i = 1; i < x+1 ; i++)
+            {
+                for ( int j =1; j< x+1; j++)
+                {
+	                if(i ==j)
+	                {
+		                B[i,j] = 0;
+	                }
+	                else
+	                {
+        			
+		                for ( int k =1; k< y+1; k++)
+		                {
+			                p = p + Math.Pow(( A[i,k] - A[j,k] ),2) ;
+		                }
+        				
+		                q = Math.Pow(p,(0.5));
+        				
+		                B[i,j] = q;
+	                }
+                }
+            }
+
+            return B;	
+        }
+        /// <summary>
+        /// takes a matrix and normalize it.
+        /// </summary>
+        /// <param name="A">Matrix whose entries are divided by the largest entry </param>
+        /// <returns>A normalized matrix</returns>
+        public Matrix NormalizeDistance(Matrix A)
+        {
+            int x = A.RowCount;
+            int y = A.ColumnCount;
+            double s = A[0,0];
+
+            Matrix B = new Matrix(x,y);
+            for (int i = 0; i < x; i++)
+            {
+                for ( int j =0; j < y; j++)
+                {
+                    if ( A[i,j] > s)
+                    {
+                        s = A[i,j];
+                    }
+                
+                }
+
+            } 
+            
+            for (int i = 0; i < x; i++)
+            {
+                for ( int j =0; j < y; j++)
+                {
+                    B[x,y] = A[x,y] / s;
+                }    
+
+            }
+            
+            return B;
+        }
+        /// <summary>
+        /// takes a matrix and finds its sum.
+        /// </summary>
+        /// <param name="A">Matrix whose entries are added to get the sum of the matrix elements </param>
+        /// <returns>A double with the sum of the matrix</returns>
+        public double Sum(Matrix A)
+        {
+
+            int x = A.RowCount;
+            int y = A.ColumnCount;
+            double s = 0.0;
+            for (int i = 0; i < x; i++)
+            {
+                for ( int j =0; j < y; j++)
+                {
+                    s = s + A[i,j];
+
+                }
+
+            }
+            return s;
+        }
+        /// <summary>
+        /// takes a matrix and finds its trace.
+        /// </summary>
+        /// <param name="A">Matrix whose trace is found </param>
+        /// <returns>A double with the trace of the matrix</returns>
+        public double Trace(Matrix A)
+        {
+
+            int x = A.RowCount;
+            int y = A.ColumnCount;
+            double s = 0.0;
+            for (int i = 0; i < x; i++)
+            {
+                for ( int j =0; j < y; j++)
+                {
+                    if ( i == j)
+                    {
+                        s = s + A[i,j];
+                    }
+                }
+
+            }
+            return s;
+        }
+        /// <summary>
+        /// takes a matrix and finds its square for every element in it.
+        /// </summary>
+        /// <param name="A">Matrix whose elements are squared </param>
+        /// <returns>A Matrix with each element squared in it</returns>
+        public Matrix Square(Matrix A)
+        {
+
+            int x = A.RowCount;
+            int y = A.ColumnCount;
+            for (int i = 0; i < x; i++)
+            {
+                for ( int j =0; j < y; j++)
+                {
+                    A[i,j] = A[i,j] * A[i,j];
+                }
+
+            }
+            return A;
+        }
+        /// <summary>
+        /// takes a matrix and an integer that have to be subtracted.
+        /// </summary>
+        /// <param name="A","S">Matrix whose elements are subtracted by the given integer S </param>
+        /// <returns>A Matrix with each element subtracted by the given number</returns>
+        public Matrix Subtract(Matrix A, int s)
+        {
+
+            int x = A.RowCount;
+            int y = A.ColumnCount;
+            for (int i = 0; i < x; i++)
+            {
+                for ( int j =0; j < y; j++)
+                {
+                    A[i,j] = A[i,j] - s;
+                }
+
+            }
+            return A;
+        }
+/*
+        public reduceArray(int [] A, int s)
+        {
+            
+
+            while(A[s] = 
+            for (int i = 0; i < x; i++)
+            {
+                for ( int j =0; j < y; j++)
+                {
+                    A[i,j] = A[i,j] - s;
+                }
+
+            }
+            return A;
+        }
+ */      
 
     } // End Class
 }// end namespace Techniques
