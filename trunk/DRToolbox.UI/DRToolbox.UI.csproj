@@ -1,0 +1,386 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{14D56BEB-4CF8-4E02-8F50-52BBA999F471}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DRToolbox.UI</RootNamespace>
+    <AssemblyName>DRToolbox.UI</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DRToolbox.Utilities\Outside DLL Files\MS XNA\Microsoft.Xna.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DRToolbox.Utilities\Outside DLL Files\MS XNA\Microsoft.Xna.Framework.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="MWArray, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e1d84a0da19db86f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\MATLAB\MATLAB Component Runtime\v77\toolbox\dotnetbuilder\bin\win32\v2.0\MWArray.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph, Version=5.1.0.621, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DRToolbox.Utilities\Outside DLL Files\ZedGraph v5.1.0.621\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatasetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatasetForm.designer.cs">
+      <DependentUpon>DatasetForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorMessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorMessageForm.designer.cs">
+      <DependentUpon>ErrorMessageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileImport\CSV\CSVImportDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileImport\CSV\CSVImportDialog.designer.cs">
+      <DependentUpon>CSVImportDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileImport\CSV\CSVImporter.cs" />
+    <Compile Include="FileImport\Images\ImageImporter.cs" />
+    <Compile Include="FileImport\Images\ImagesImportDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FileImport\Images\ImagesImportDialog.Designer.cs">
+      <DependentUpon>ImagesImportDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileImport\ImportedFile.cs" />
+    <Compile Include="Graphs\XYScatterPlot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Graphs\XYScatterPlot.designer.cs">
+      <DependentUpon>XYScatterPlot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs\XYZPlot.cs" />
+    <Compile Include="ImportedFileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportedFileForm.designer.cs">
+      <DependentUpon>ImportedFileForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\GraphMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Menus\TechniqueMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="TechniqueActivation\CCAForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\CCAForm.designer.cs">
+      <DependentUpon>CCAForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\CFAForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\CFAForm.designer.cs">
+      <DependentUpon>CFAForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\LLCForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\LLCForm.designer.cs">
+      <DependentUpon>LLCForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\LandmarkIsomapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\LandmarkIsomapForm.designer.cs">
+      <DependentUpon>LandmarkIsomapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\LaplacianForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\LaplacianForm.designer.cs">
+      <DependentUpon>LaplacianForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\LPPForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\LPPForm.designer.cs">
+      <DependentUpon>LPPForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\SNEForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\SNEForm.designer.cs">
+      <DependentUpon>SNEForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\DiffusionMapsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\DiffusionMapsForm.designer.cs">
+      <DependentUpon>DiffusionMapsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\ManifoldChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\ManifoldChartForm.designer.cs">
+      <DependentUpon>ManifoldChartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\ProbPCAForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\ProbPCAForm.designer.cs">
+      <DependentUpon>ProbPCAForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\NPEForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\NPEForm.designer.cs">
+      <DependentUpon>NPEForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\MVUForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\MVUForm.designer.cs">
+      <DependentUpon>MVUForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\LTSAForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\LTSAForm.designer.cs">
+      <DependentUpon>LTSAForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\LLTSAForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\LLTSAForm.designer.cs">
+      <DependentUpon>LLTSAForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\LandmarkMVUForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\LandmarkMVUForm.designer.cs">
+      <DependentUpon>LandmarkMVUForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\HessianLLEForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\HessianLLEForm.designer.cs">
+      <DependentUpon>HessianLLEForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\IsomapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\IsomapForm.designer.cs">
+      <DependentUpon>IsomapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TechniqueActivation\LLEForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TechniqueActivation\LLEForm.designer.cs">
+      <DependentUpon>LLEForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RanTechniqueControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\RanTechniqueControl.designer.cs">
+      <DependentUpon>RanTechniqueControl.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AboutForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatasetForm.resx">
+      <DependentUpon>DatasetForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorMessageForm.resx">
+      <DependentUpon>ErrorMessageForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileImport\CSV\CSVImportDialog.resx">
+      <DependentUpon>CSVImportDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileImport\Images\ImagesImportDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ImagesImportDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Graphs\XYScatterPlot.resx">
+      <DependentUpon>XYScatterPlot.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportedFileForm.resx">
+      <DependentUpon>ImportedFileForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\CCAForm.resx">
+      <DependentUpon>CCAForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\CFAForm.resx">
+      <DependentUpon>CFAForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\LLCForm.resx">
+      <DependentUpon>LLCForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\LandmarkIsomapForm.resx">
+      <DependentUpon>LandmarkIsomapForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\LaplacianForm.resx">
+      <DependentUpon>LaplacianForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\LPPForm.resx">
+      <DependentUpon>LPPForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\SNEForm.resx">
+      <DependentUpon>SNEForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\DiffusionMapsForm.resx">
+      <DependentUpon>DiffusionMapsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\ManifoldChartForm.resx">
+      <DependentUpon>ManifoldChartForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\ProbPCAForm.resx">
+      <DependentUpon>ProbPCAForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\NPEForm.resx">
+      <DependentUpon>NPEForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\MVUForm.resx">
+      <DependentUpon>MVUForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\LTSAForm.resx">
+      <DependentUpon>LTSAForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\LLTSAForm.resx">
+      <DependentUpon>LLTSAForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\LandmarkMVUForm.resx">
+      <DependentUpon>LandmarkMVUForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\HessianLLEForm.resx">
+      <DependentUpon>HessianLLEForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\IsomapForm.resx">
+      <DependentUpon>IsomapForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TechniqueActivation\LLEForm.resx">
+      <DependentUpon>LLEForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\RanTechniqueControl.resx">
+      <DependentUpon>RanTechniqueControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DRToolbox.Techniques\DRToolbox.Techniques.csproj">
+      <Project>{25088498-EDEC-4234-9CD9-0F78A15F7680}</Project>
+      <Name>DRToolbox.Techniques</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DRToolbox.Utilities\DRToolbox.Utilities.csproj">
+      <Project>{26715C0A-EA21-4535-A3C3-D39835277EF5}</Project>
+      <Name>DRToolbox.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BrownishBullet.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\progressbar.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
